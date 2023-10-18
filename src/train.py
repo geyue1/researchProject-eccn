@@ -44,7 +44,7 @@ def test(net,device,epoch,loss_fn,test_data):
     net.eval()
 
     with torch.no_grad():
-        for batch_id, (inputs, targets) in enumerate(data):
+        for batch_id, (inputs, targets) in enumerate(test_data):
             inputs, targets = inputs.to(device), targets.to(device)
             outputs = net(inputs)
             loss = loss_fn(outputs, targets)
