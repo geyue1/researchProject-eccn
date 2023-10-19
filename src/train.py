@@ -9,10 +9,13 @@
 
 ==============================================================
 '''
+import os.path
+
 import torch
+from torch import optim
 
 
-def train(net,device=torch.device("cpu"),epoch_num,lr,optimizer,loss_fn,train_data,test_data):
+def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
     net.to(device)
     net.train()
 
@@ -61,4 +64,4 @@ def test(net,device,epoch,loss_fn,test_data):
         if temp>best_acc:
             best_acc = temp
             print(f"******best_acc={best_acc}")
-            torch.save(net.state_dict(), '../saved_models/'+net.get_name()+'.pth')
+            torch.save(net.state_dict(), os.path.join("..","saved_models",net.get_name(),".pth"))
