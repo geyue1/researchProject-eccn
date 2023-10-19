@@ -12,7 +12,7 @@
 import torch
 
 
-def train(net,device=torch.device("cpu"),epoch_num,lr,optimizer,loss_fn,train_data):
+def train(net,device=torch.device("cpu"),epoch_num,lr,optimizer,loss_fn,train_data,test_data):
     net.to(device)
     net.train()
 
@@ -34,6 +34,8 @@ def train(net,device=torch.device("cpu"),epoch_num,lr,optimizer,loss_fn,train_da
             correct += predicted.eq(targets).sum().item()
 
         print(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
+
+        test(net,device,epoch,loss_fn,test_data)
 
 def test(net,device,epoch,loss_fn,test_data):
     test_loss = 0
