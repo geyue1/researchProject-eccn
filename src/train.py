@@ -14,10 +14,11 @@ import os.path
 import torch
 from torch import optim
 
-
+best_acc = 0
 def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
     net.to(device)
     net.train()
+
 
     for epoch in range(epoch_num):
         train_loss = 0
@@ -64,4 +65,7 @@ def test(net,device,epoch,loss_fn,test_data):
         if temp>best_acc:
             best_acc = temp
             print(f"******best_acc={best_acc}")
-            torch.save(net.state_dict(), os.path.join("..","saved_models",net.get_name(),".pth"))
+            path = os.path.join("..","saved_models")
+            if not os.path.isdir(path):
+                os.makedirs(path)
+            torch.save(net.state_dict(), os.path.join("..","saved_models",net.get_name()+".pth"))
