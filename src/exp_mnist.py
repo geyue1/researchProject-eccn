@@ -25,7 +25,7 @@ transform = transforms.Compose([
 ])
 test_data,train_data = mnist_data(data_path=data_path,transform=transform,batch_size=128)
 net = P4CNN()
-epoch_num = 100
+epoch_num = 5
 lr = 0.1
 optimizer = optim.SGD(net.parameters(), lr=lr)
 loss_fn = nn.CrossEntropyLoss()

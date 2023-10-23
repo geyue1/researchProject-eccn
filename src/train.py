@@ -38,7 +38,9 @@ def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
             correct += predicted.eq(targets).sum().item()
 
         print(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
-
+        print(f"train_loss={train_loss}")
+        print(f"train total={total}")
+        print(f"train size={len(train_data)}")
         test(net,device,epoch,loss_fn,test_data)
 
 def test(net,device,epoch,loss_fn,test_data):
@@ -62,7 +64,8 @@ def test(net,device,epoch,loss_fn,test_data):
 
         print(f"Test Epoch:{epoch + 1} Losss:{100. * test_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
         temp = correct / total
-        if temp>best_acc:
+        save_flag = True
+        if save_flag and temp>best_acc:
             best_acc = temp
             print(f"******best_acc={best_acc}")
             path = os.path.join("..","saved_models")

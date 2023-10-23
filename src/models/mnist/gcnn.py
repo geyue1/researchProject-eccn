@@ -115,6 +115,7 @@ class P4CNN(nn.Module):
         self.conv2 = P4ConvP4(10, 10, kernel_size=3)
         self.conv3 = P4ConvP4(10, 20, kernel_size=3)
         self.conv4 = P4ConvP4(20, 20, kernel_size=3)
+        self.fl = nn.Flatten()
         self.fc1 = nn.Linear(4*4*20*4, 50)
         self.fc2 = nn.Linear(50, 10)
 
@@ -126,10 +127,11 @@ class P4CNN(nn.Module):
         x = F.relu(self.conv4(x))
         x = plane_group_spatial_max_pooling(x, 2, 2)
         x = x.view(x.size()[0], -1)
+        x = self.fl(x)
         x = F.relu(self.fc1(x))
         x = F.dropout(x, training=self.training)
         x = self.fc2(x)
-        return F.softmax(x,dim=1)
+        return x
     def get_name(self):
         return P4CNN.__name__
 
