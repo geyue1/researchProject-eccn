@@ -14,6 +14,7 @@ import os.path
 from torch import optim, nn
 from torchvision import transforms
 
+from src.models.mnist.sesn import MNIST_SES_V
 from src.utils import mnist_data, get_device
 from src.models.mnist.gcnn import Z2CNN, P4CNN
 from src.train import train
@@ -24,7 +25,7 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 test_data,train_data = mnist_data(data_path=data_path,transform=transform,batch_size=128)
-net = P4CNN()
+net = MNIST_SES_V()
 epoch_num = 5
 lr = 0.1
 optimizer = optim.SGD(net.parameters(), lr=lr)
