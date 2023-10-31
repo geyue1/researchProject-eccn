@@ -30,7 +30,7 @@ transform = transforms.Compose([
 test_data,train_data = mnist_data(data_path=data_path,transform=transform,batch_size=128)
 net = MNIST_SES_V()
 epoch_num = 5
-lr = 0.1
+lr = 0.05
 optimizer = optim.SGD(net.parameters(), lr=lr)
 loss_fn = nn.CrossEntropyLoss()
 
