@@ -14,7 +14,7 @@ from torch import nn
 import torch.nn.functional as F
 from groupy.gconv.pytorch_gconv import P4ConvZ2, P4ConvP4
 
-from src.models.model import SuperNet
+from src.exp_models.model import SuperNet
 
 
 def conv_block(in_channels, out_channels, kernel_size, stride=1, padding=0):

@@ -13,6 +13,12 @@ import os.path
 
 import torch
 from torch import optim
+import logging
+
+log_file = os.path.join("..","logs")
+if not os.path.isdir(log_file):
+    os.makedirs(log_file)
+logging.basicConfig(filename=os.path.join("..","logs","train.log"), level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 best_acc = 0
 def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
@@ -37,10 +43,10 @@ def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
 
-        print(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
-        print(f"train_loss={train_loss}")
-        print(f"train total={total}")
-        print(f"train size={len(train_data)}")
+        logging.info(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
+        logging.info(f"train_loss={train_loss}")
+        logging.info(f"train total={total}")
+        logging.info(f"train size={len(train_data)}")
         test(net,device,epoch,loss_fn,test_data)
 
 def test(net,device,epoch,loss_fn,test_data):
@@ -62,12 +68,12 @@ def test(net,device,epoch,loss_fn,test_data):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
 
-        print(f"Test Epoch:{epoch + 1} Losss:{100. * test_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
+        logging.info(f"Test Epoch:{epoch + 1} Losss:{100. * test_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
         temp = correct / total
         save_flag = True
         if save_flag and temp>best_acc:
             best_acc = temp
-            print(f"******best_acc={best_acc}")
+            logging.info(f"******best_acc={best_acc}")
             path = os.path.join("..","saved_models")
             if not os.path.isdir(path):
                 os.makedirs(path)

@@ -14,10 +14,13 @@ import os.path
 from torch import optim, nn
 from torchvision import transforms
 
-from src.models.mnist.sesn import MNIST_SES_V
-from src.utils import mnist_data, get_device
-from src.models.mnist.gcnn import Z2CNN, P4CNN
-from src.train import train
+from exp_models.mnist.sesn import MNIST_SES_V
+from utils import mnist_data, get_device
+
+from train import train
+
+
+
 
 data_path = os.path.join("..","data","mnist")
 device = get_device()

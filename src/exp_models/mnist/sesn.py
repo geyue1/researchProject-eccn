@@ -14,7 +14,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from models.impl.ses_conv import SESConv_Z2_H, SESConv_H_H, SESMaxProjection
 
-
 class MNIST_SES_V(nn.Module):
 
     def __init__(self, pool_size=4, kernel_size=11, scales=[1.0], basis_type='A', dropout=0.7, **kwargs):
