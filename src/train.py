@@ -9,17 +9,20 @@
 
 ==============================================================
 '''
+import logging
 import os.path
 
 import torch
 from torch import optim
-import logging
 
-log_file = os.path.join("..","logs")
-if not os.path.isdir(log_file):
-    os.makedirs(log_file)
-logging.basicConfig(filename=os.path.join("..","logs","train.log"), level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+import utils
 
+# log_file = os.path.join("..","logs")
+# if not os.path.isdir(log_file):
+#     os.makedirs(log_file)
+# logging.basicConfig(filename=os.path.join("..","logs","train.log"), level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+logger = utils.log("train",level=logging.INFO)
 best_acc = 0
 def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
     net.to(device)
@@ -43,10 +46,10 @@ def train(net,device,epoch_num,lr,optimizer,loss_fn,train_data,test_data):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
 
-        logging.info(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
-        logging.info(f"train_loss={train_loss}")
-        logging.info(f"train total={total}")
-        logging.info(f"train size={len(train_data)}")
+        logger.info(f"Train Epoch:{epoch + 1} Losss:{100. * train_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
+        logger.info(f"train_loss={train_loss}")
+        logger.info(f"train total={total}")
+        logger.info(f"train size={len(train_data)}")
         test(net,device,epoch,loss_fn,test_data)
 
 def test(net,device,epoch,loss_fn,test_data):
@@ -68,12 +71,12 @@ def test(net,device,epoch,loss_fn,test_data):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
 
-        logging.info(f"Test Epoch:{epoch + 1} Losss:{100. * test_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
+        logger.info(f"Test Epoch:{epoch + 1} Losss:{100. * test_loss / (total):.2f}% Acc:{100. * correct / total :.2f}%")
         temp = correct / total
         save_flag = True
         if save_flag and temp>best_acc:
             best_acc = temp
-            logging.info(f"******best_acc={best_acc}")
+            logger.info(f"******best_acc={best_acc}")
             path = os.path.join("..","saved_models")
             if not os.path.isdir(path):
                 os.makedirs(path)
