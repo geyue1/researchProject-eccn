@@ -33,9 +33,9 @@ test_data,train_data = mnist_data(data_path=data_path,transform=transform,batch_
 #net = MNIST_SES_V()
 net = mnist_xu_28()
 epoch_num = 5
-lr = 0.05
+lr = 0.01
 optimizer = optim.SGD(net.parameters(), lr=lr)
-loss_fn = nn.CrossEntropyLoss()
+loss_fn = nn.CrossEntropyLoss().to(device)
 
 train(net,
       device,
